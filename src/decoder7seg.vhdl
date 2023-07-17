@@ -13,7 +13,7 @@ END decoder7seg;
 
 ARCHITECTURE structural OF decoder7seg IS
 BEGIN
-    PROCESS(bcd_in)
+    PROCESS (bcd_in)
     BEGIN
         CASE bcd_in IS
             WHEN "0000" => seven_seg_out <= "0000001"; -- 0

@@ -6,8 +6,7 @@ USE ieee.std_logic_1164.ALL;
 ENTITY subtractor IS
     PORT (
         a, b : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-    );
+        y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
 END subtractor;
 
 ARCHITECTURE behavior OF subtractor IS
@@ -17,15 +16,13 @@ ARCHITECTURE behavior OF subtractor IS
             a, b : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
             cin : IN STD_LOGIC;
             y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-            cout : OUT STD_LOGIC;
-        );
+            cout : OUT STD_LOGIC);
     END COMPONENT;
 
     COMPONENT inverter
         PORT (
             a : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-            y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        );
+            y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
     END COMPONENT;
 
 BEGIN
