@@ -1,3 +1,5 @@
+-- 4-bit counter with 7-segment display
+
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE ieee.numeric_std.ALL;

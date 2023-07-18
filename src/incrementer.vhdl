@@ -11,6 +11,7 @@ ENTITY incrementer IS
 END incrementer;
 
 ARCHITECTURE behavior OF incrementer IS
+
     COMPONENT carry_lookahead_adder
         PORT (
             a, b : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -21,8 +22,11 @@ ARCHITECTURE behavior OF incrementer IS
 
     SIGNAL sum : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL carry : STD_LOGIC;
+
 BEGIN
+
     add : carry_lookahead_adder PORT MAP(a, (OTHERS => '0'), '1', sum, carry);
     incout <= sum;
     inccout <= carry;
+
 END behavior;

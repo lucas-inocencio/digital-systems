@@ -2,7 +2,6 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
 
 ENTITY inverter IS
     PORT (
@@ -12,6 +11,16 @@ ENTITY inverter IS
 END inverter;
 
 ARCHITECTURE behavior OF inverter IS
+
+    COMPONENT incrementer
+        PORT (
+            a : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+            incout : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+            inccout : OUT STD_LOGIC);
+    END COMPONENT;
+
 BEGIN
-    y <= STD_LOGIC_VECTOR(unsigned(NOT a) + 1);
+
+    U0 : incrementer PORT MAP(NOT (a), y, OPEN);
+
 END behavior;

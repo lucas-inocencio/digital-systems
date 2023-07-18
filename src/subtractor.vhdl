@@ -24,6 +24,7 @@ ARCHITECTURE behavior OF subtractor IS
             a : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
             y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
     END COMPONENT;
+
     SIGNAL b_inv, sub, sub_inv : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL sign_bit : STD_LOGIC;
 
@@ -38,6 +39,7 @@ BEGIN
     -- if sign bit is 1, then the result is negative
     -- so we take 2's complement of the result
     inv2 : inverter PORT MAP(sub, sub_inv);
+    
     PROCESS (sign_bit, sub)
     BEGIN
         IF (sign_bit = '1') THEN

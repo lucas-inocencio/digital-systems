@@ -2,7 +2,6 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
 
 ENTITY carry_lookahead_adder IS
     PORT (
@@ -27,7 +26,9 @@ ARCHITECTURE Behavioral OF carry_lookahead_adder IS
 
     SIGNAL c1, c2, c3 : STD_LOGIC;
     SIGNAL p, g, s : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    
 BEGIN
+
     pfa1 : partial_Full_Adder PORT MAP(a(0), b(0), cin, s(0), p(0), g(0));
     pfa2 : partial_Full_Adder PORT MAP(a(1), b(1), c1, s(1), p(1), g(1));
     pfa3 : partial_Full_Adder PORT MAP(a(2), b(2), c2, s(2), p(2), g(2));

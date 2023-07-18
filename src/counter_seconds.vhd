@@ -1,3 +1,5 @@
+-- 4-bit counter with 50MHz clock input
+
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE ieee.numeric_std.ALL;

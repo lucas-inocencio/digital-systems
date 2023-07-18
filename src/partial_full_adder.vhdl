@@ -2,7 +2,6 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
 
 ENTITY partial_full_adder IS
     PORT (
@@ -17,7 +16,7 @@ END partial_full_adder;
 ARCHITECTURE Behavioral OF partial_full_adder IS
 
 BEGIN
-
+    
     s <= a XOR b XOR cin;
     p <= a XOR b;
     g <= a AND b;
