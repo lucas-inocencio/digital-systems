@@ -2,6 +2,7 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
 
 ENTITY inverter IS
     PORT (
@@ -12,5 +13,5 @@ END inverter;
 
 ARCHITECTURE behavior OF inverter IS
 BEGIN
-    y <= (NOT a) + 1;
+    y <= STD_LOGIC_VECTOR(unsigned(NOT a) + 1);
 END behavior;

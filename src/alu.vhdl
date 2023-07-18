@@ -15,12 +15,12 @@ END ALU;
 
 ARCHITECTURE Behavioral OF ALU IS
 
-    COMPONENT carry_look_ahead_adder
+    COMPONENT carry_lookahead_adder
         PORT (
             a, b : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             cin : IN STD_LOGIC;
-            cout : OUT STD_LOGIC;
-            sum : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
+				y : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            cout : OUT STD_LOGIC);
     END COMPONENT;
 
     COMPONENT subtractor
@@ -29,11 +29,11 @@ ARCHITECTURE Behavioral OF ALU IS
             y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
     END COMPONENT;
 
-    COMPONENT increment
+    COMPONENT incrementer
         PORT (
             a : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-            y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-            cout : OUT STD_LOGIC);
+            incout : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+            inccout : OUT STD_LOGIC);
     END COMPONENT;
 
     COMPONENT inverter
@@ -42,79 +42,99 @@ ARCHITECTURE Behavioral OF ALU IS
             y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
     END COMPONENT;
 
+    SIGNAL sum, sub, a_plus_plus, a_inv : STD_LOGIC_VECTOR (3 DOWNTO 0);
+    SIGNAL sum_cout, inc_cout : STD_LOGIC;
 BEGIN
 
-    cla_adder : carry_look_ahead_adder
-    PORT MAP(
-        a => a,
-        b => b,
-        cin => '0',
-        sum_cout => flags(0),
-        sum => y);
+    cla_adder : carry_lookahead_adder PORT MAP(
+        a,
+        b,
+        '0',
+        sum,
+        sum_cout);
 
     subt : subtractor
     PORT MAP(
-        a => a,
-        b => b,
-        sub => y);
+        a,
+        b,
+        sub);
 
-    incr : increment
+    inc : incrementer
     PORT MAP(
-        a => a,
-        a_plus_plus => y,
-        inc_cout => flags(0));
+        a,
+        a_plus_plus,
+        inc_cout);
 
     inv : inverter
     PORT MAP(
-        a => a,
-        a_inv => y);
+        a,
+        a_inv);
 
     PROCESS (a, b, sel)
     BEGIN
         CASE sel IS
             WHEN "000" => y <= sum;
-					 begin 
                 flags(0) <= sum_cout; -- overflow
                 flags(1) <= sum_cout; -- carry out
                 flags(2) <= '0'; -- negative
-                flags(3) <= '1' WHEN (sum = "0000") ELSE
-                '0'; -- zero
+                IF sum = "0000" THEN
+                    flags(3) <= '1'; -- zero
+                ELSE
+                    flags(3) <= '0';
+                END IF;
 
             WHEN "001" => y <= sub;
                 flags(0) <= '0';
                 flags(1) <= '0';
-                flags(2) <= '1' WHEN b > a;
-            ELSE
-                '0';
-                flags(3) <= '1' WHEN sub = "0000";
-            ELSE
-                '0';
+                IF b > a THEN
+                    flags(2) <= '1';
+                ELSE
+                    flags(2) <= '0';
+                END IF;
+                IF sub = "0000" THEN
+                    flags(3) <= '1';
+                ELSE
+                    flags(3) <= '0';
+                END IF;
 
-            WHEN "010" => y <= a_plus_plus;
-                flags(0) <= '1' WHEN a = "1111";
-            ELSE
-                '0';
-                flags(1) <= '1' WHEN a = "1111";
-            ELSE
-                '0';
-                flags(2) <= '1' WHEN y = "0000";
-            ELSE
-                '0';
+            WHEN "010" =>
+                y <= a_plus_plus;
+                IF a = "1111" THEN
+                    flags(0) <= '1';
+                    flags(1) <= '1';
+                ELSE
+                    flags(0) <= '0';
+                    flags(1) <= '0';
+                END IF;
+                IF a_plus_plus = "0000" THEN
+                    flags(2) <= '1';
+                ELSE
+                    flags(2) <= '0';
+                END IF;
                 flags(3) <= '0';
 
-            WHEN "011" => y <= a_inv;
-                flags(0) <= '1' WHEN a = "0000";
-            ELSE
-                '0';
-                flags(1) <= '1' WHEN a = "0000";
-            ELSE
-                '0';
-                flags(2) <= '0' WHEN a = "0000";
-            ELSE
-                '1';
-                flags(3) <= '0' WHEN a = "0000";
-            ELSE
-                '1';
+            WHEN "011" =>
+                y <= a_inv;
+                IF a = "0000" THEN
+                    flags(0) <= '1';
+                ELSE
+                    flags(0) <= '0';
+                END IF;
+                IF a = "0000" THEN
+                    flags(1) <= '1';
+                ELSE
+                    flags(1) <= '0';
+                END IF;
+                IF a = "0000" THEN
+                    flags(2) <= '0';
+                ELSE
+                    flags(2) <= '1';
+                END IF;
+                IF a = "0000" THEN
+                    flags(3) <= '0';
+                ELSE
+                    flags(3) <= '1';
+                END IF;
 
             WHEN OTHERS => y <= "0000";
                 flags(0) <= '0';

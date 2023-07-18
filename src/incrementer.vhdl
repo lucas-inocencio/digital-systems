@@ -6,8 +6,8 @@ USE ieee.std_logic_1164.ALL;
 ENTITY incrementer IS
     PORT (
         a : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        cout : OUT STD_LOGIC);
+        incout : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+        inccout : OUT STD_LOGIC);
 END incrementer;
 
 ARCHITECTURE behavior OF incrementer IS
@@ -18,8 +18,11 @@ ARCHITECTURE behavior OF incrementer IS
             y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
             cout : OUT STD_LOGIC);
     END COMPONENT;
+
+    SIGNAL sum : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    SIGNAL carry : STD_LOGIC;
 BEGIN
-    adder : carry_lookahead_adder PORT MAP(a, '0', '1', sum, carry);
-    y <= sum;
-    cout <= carry;
+    add : carry_lookahead_adder PORT MAP(a, (OTHERS => '0'), '1', sum, carry);
+    incout <= sum;
+    inccout <= carry;
 END behavior;
