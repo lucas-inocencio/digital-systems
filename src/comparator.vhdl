@@ -1,7 +1,5 @@
--- 4-Bit Magnitude Comparator
-
-LIBRARY IEE;
-USE IEE.std_logic_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
 
 ENTITY comparator IS
     PORT (
@@ -15,17 +13,17 @@ BEGIN
     PROCESS (a, b)
     BEGIN
         FOR i IN 3 DOWNTO 0 LOOP
-            IF a(i) AND NOT b(i) THEN
+            IF a(i) = '1' AND b(i) = '0' THEN
                 eq <= '0';
                 gt <= '1';
                 lt <= '0';
                 EXIT;
-            ELSIF NOT a(i) AND b(i) THEN
+            ELSIF a(i) = '0' AND b(i) = '1' THEN
                 eq <= '0';
                 gt <= '0';
                 lt <= '1';
                 EXIT;
-            ELSIF a(i) XNOR b(i) THEN
+            ELSIF (a(i) = '1' AND b(i) = '1') OR (a(i) = '0' AND b(i) = '0') THEN
                 eq <= '1';
                 gt <= '0';
                 lt <= '0';

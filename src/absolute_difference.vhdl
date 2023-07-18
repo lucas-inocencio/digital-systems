@@ -23,18 +23,23 @@ ARCHITECTURE behavioral OF absolute_difference IS
             y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
     END COMPONENT;
 
+	SIGNAL y1, y2 : STD_LOGIC_VECTOR(3 DOWNTO 0);
+	SIGNAL equal, greater, less : STD_LOGIC;
+	 
 BEGIN
 
-    U0 : comparator PORT MAP(a, b, eq, gt, lt);
+    U0 : comparator PORT MAP(a, b, equal, greater, less);
+	 U1 : subtractor PORT MAP(a, b, y1);
+	 U2 : subtractor PORT MAP(b, a, y2);
 
-    PROCESS(eq, gt, lt, a, b)
+    PROCESS(equal, greater, less, a, b)
     BEGIN
-        IF eq = '1' THEN
+        IF equal = '1' THEN
             y <= "0000";
-        ELSIF gt = '1' THEN
-            y <= subtractor(a, b, y);
-        ELSIF lt = '1' THEN
-            y <= subtractor(b, a, y);
+        ELSIF greater = '1' THEN
+            y <= y1;
+        ELSIF less = '1' THEN
+            y <= y2;
         END IF;
     END PROCESS;
 

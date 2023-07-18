@@ -6,7 +6,7 @@ USE ieee.std_logic_1164.ALL;
 ENTITY exor IS
     PORT (
         a, b : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        y : OUT STD_LOGIC(3 DOWNTO 0));
+        y : OUT STD_LOGIC_VECTOR(3 DOWNTO 0));
 END exor;
 
 ARCHITECTURE Behavioral OF exor IS

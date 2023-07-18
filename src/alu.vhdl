@@ -66,7 +66,8 @@ ARCHITECTURE Behavioral OF alu IS
             y : OUT STD_LOGIC_VECTOR(1 DOWNTO 0));
     END COMPONENT;
 
-    SIGNAL sum, sub, a_plus_plus, a_inv, xr, mag_comp, abs_diff, hwc : STD_LOGIC_VECTOR (3 DOWNTO 0);
+    SIGNAL sum, sub, a_plus_plus, a_inv, xr, mag_comp, abs_diff : STD_LOGIC_VECTOR (3 DOWNTO 0);
+	 SIGNAL hwc : STD_LOGIC_VECTOR (1 DOWNTO 0);
     SIGNAL sum_cout, inc_cout, equal, greater, less : STD_LOGIC;
 
 BEGIN

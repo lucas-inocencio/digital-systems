@@ -12,26 +12,19 @@ END hamming_weight_calculator;
 
 ARCHITECTURE Behavioral OF hamming_weight_calculator IS
 
-    COMPONENT incrementer
-        PORT (
-            a : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-            incout : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-            inccout : OUT STD_LOGIC);
-    END COMPONENT;
-
-    SIGNAL temp_cont, temp_y : STD_LOGIC_VECTOR(1 DOWNTO 0);
-
 BEGIN
 
     PROCESS (a)
     BEGIN
-        y <= 0;
-
-        FOR i IN 0 TO 3 RANGE LOOP
-            IF a(i) = '1' THEN
-                y <= y + 1;
-            END IF;
-        END LOOP;
+        IF a = "0000" THEN
+            y <= "00";
+        ELSIF a = "0001" OR a = "0010" OR a = "0100" OR a = "1000" THEN
+            y <= "01";
+        ELSIF a = "1111" THEN
+            y <= "11";
+        ELSE
+            y <= "10";
+        END IF;
     END PROCESS;
-    
+
 END Behavioral;
