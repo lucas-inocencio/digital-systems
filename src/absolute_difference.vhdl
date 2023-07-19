@@ -29,8 +29,8 @@ ARCHITECTURE behavioral OF absolute_difference IS
 BEGIN
 
     U0 : comparator PORT MAP(a, b, equal, greater, less);
-	 U1 : subtractor PORT MAP(a, b, y1);
-	 U2 : subtractor PORT MAP(b, a, y2);
+	U1 : subtractor PORT MAP(a, b, y1);
+	U2 : subtractor PORT MAP(b, a, y2);
 
     PROCESS(equal, greater, less, a, b)
     BEGIN
